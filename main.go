@@ -77,7 +77,11 @@ func createWindowContent(app fyne.App, url string) (*fyne.Container, error) {
 
 func createBrowserButton(browser string, app fyne.App, url string) (*widget.Button, error) {
 	name, iconName := getBrowserNameIcon(browser)
-	iconPath := getBrowserIconPath(iconName)
+
+	iconPath := "assets/question-mark.png"
+	if iconName != "" {
+		iconPath = getBrowserIconPath(iconName)
+	}
 	icon, err := fyne.LoadResourceFromPath(iconPath)
 	if err != nil {
 		return nil, fmt.Errorf("unable to load icon of %s %w", iconName, err)
@@ -162,7 +166,7 @@ func getBrowserNameIcon(desktopFile string) (string, string) {
 	name, nameErr := getValueFromFile(file, "Name")
 
 	if iconErr != nil {
-		icon = "yad"
+		icon = ""
 		log.Printf("Unable to get icon for %s: %s", desktopFile, iconErr)
 	}
 
