@@ -77,18 +77,10 @@ func createWindowContent(app fyne.App, url string) (*fyne.Container, error) {
 
 func createBrowserButton(browser string, app fyne.App, url string) (*widget.Button, error) {
 	name, iconName := getBrowserNameIcon(browser)
-
-	iconPath := "assets/question-mark.png"
-	if iconName != "" {
-		iconPath = getBrowserIconPath(iconName)
-	}
-	icon, err := fyne.LoadResourceFromPath(iconPath)
-	if err != nil {
-		return nil, fmt.Errorf("unable to load icon of %s %w", iconName, err)
-	}
+	icon := getBrowserIconResource(iconName)
 
 	button := widget.NewButtonWithIcon(name, icon, func() {
-		err = openBrowser(browser, url)
+		err := openBrowser(browser, url)
 		if err != nil {
 			log.Printf("Unable to open browser. %s", err)
 		}
@@ -97,6 +89,20 @@ func createBrowserButton(browser string, app fyne.App, url string) (*widget.Butt
 	button.Alignment = widget.ButtonAlignLeading
 
 	return button, nil
+}
+
+func getBrowserIconResource(iconName string) fyne.Resource {
+	if iconName == "" {
+		return resourceQuestionMarkPng
+	}
+
+	iconPath := getBrowserIconPath(iconName)
+	icon, err := fyne.LoadResourceFromPath(iconPath)
+	if err != nil {
+		log.Printf("Unable to load icon %s\n%s", iconName, err)
+		return resourceQuestionMarkPng
+	}
+	return icon
 }
 
 // Launches the browser based on the passed desktop file.
