@@ -41,6 +41,7 @@ func main() {
 		log.Fatalf("Unable to retrieve necessary information. Nothing to show. %s", err)
 	}
 
+	w.Resize(fyne.NewSize(400, windowContent.Size().Height))
 	w.SetContent(windowContent)
 	w.ShowAndRun()
 }
