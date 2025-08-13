@@ -66,6 +66,7 @@ func createWindowContent(app fyne.App, url string) (*fyne.Container, error) {
 
 	pickLabel := widget.NewLabel("Pick a browser to open:")
 	urlLabel := widget.NewLabel(url)
+	urlLabel.Wrapping = fyne.TextWrapWord
 
 	windowContent := container.NewVBox(pickLabel)
 	windowContent.Add(urlLabel)
