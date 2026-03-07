@@ -3,15 +3,16 @@ package main
 import (
 	"errors"
 	"fmt"
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/widget"
 	"log"
 	"os"
 	"os/exec"
 	"slices"
 	"strings"
+
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/widget"
 )
 
 const IconsPath string = "/usr/share/icons/hicolor/32x32/apps/"
@@ -42,6 +43,8 @@ func main() {
 	}
 
 	w.Resize(fyne.NewSize(400, windowContent.Size().Height))
+	w.CenterOnScreen()
+
 	w.SetContent(windowContent)
 	w.ShowAndRun()
 }
