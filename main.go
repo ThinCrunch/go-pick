@@ -12,6 +12,7 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -71,8 +72,8 @@ func createWindowContent(app fyne.App, url string) (*fyne.Container, error) {
 	}
 
 	pickLabel := widget.NewLabel("Pick a browser to open:")
-	urlLabel := widget.NewLabel(url)
-	urlLabel.Wrapping = fyne.TextWrapWord
+	wrappedUrlLabel := wrapStringToWidth(url, WindowPixelWidth)
+	urlLabel := widget.NewLabel(wrappedUrlLabel)
 
 	windowContent := container.NewVBox(pickLabel)
 	windowContent.Add(urlLabel)
@@ -81,6 +82,29 @@ func createWindowContent(app fyne.App, url string) (*fyne.Container, error) {
 	}
 
 	return windowContent, nil
+}
+
+func wrapStringToWidth(text string, maxPixelWidth int) string {
+	sBuilder := strings.Builder{}
+
+	fontSize := theme.TextSize()
+	fontStyle := fyne.TextStyle{}
+
+	lastWrapIdx := 0
+	for i := 1; i <= len(text); i++ {
+		currentTextWidth := fyne.MeasureText(text[lastWrapIdx:i], fontSize, fontStyle).Width
+		if currentTextWidth > float32(maxPixelWidth) {
+			sBuilder.WriteString(text[lastWrapIdx:i])
+			sBuilder.WriteString("\n")
+			lastWrapIdx = i
+		}
+	}
+
+	if lastWrapIdx < len(text) {
+		sBuilder.WriteString(text[lastWrapIdx:])
+	}
+
+	return sBuilder.String()
 }
 
 func createBrowserButton(browser string, app fyne.App, url string) (*widget.Button, error) {
