@@ -19,6 +19,8 @@ const IconsPath string = "/usr/share/icons/hicolor/32x32/apps/"
 const MimeInfoPath string = "/usr/share/applications/mimeinfo.cache"
 const ApplicationsPath string = "/usr/share/applications/"
 
+const WindowPixelWidth int = 400
+
 var BrowserBlacklist = []string{"go-pick.desktop"}
 
 func main() {
@@ -43,6 +45,7 @@ func main() {
 	}
 
 	w.Resize(fyne.NewSize(400, windowContent.Size().Height))
+	w.Resize(fyne.NewSize(float32(WindowPixelWidth), windowContent.Size().Height))
 	w.CenterOnScreen()
 
 	w.SetContent(windowContent)
