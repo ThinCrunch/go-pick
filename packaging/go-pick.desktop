@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=GoPick
+Comment=A browser picker written in Go.
+Exec=go-pick %u
+Icon=application-x-executable
+Terminal=false
